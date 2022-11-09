@@ -66,8 +66,9 @@ static bool make_token(char *e) {
 
   nr_token = 0;
   Token myToken[NR_REGEX];
-
+  printf("NR_REGEX length is : %ld\n",NR_REGEX);
   while (e[position] != '\0') {
+	printf("e[position] is :%c\n",e[position]);
     /* Try all rules one by one. */
     for (i = 0; i < NR_REGEX; i ++) {
       if (regexec(&re[i], e + position, 1, &pmatch, 0) == 0 && pmatch.rm_so == 0) {
