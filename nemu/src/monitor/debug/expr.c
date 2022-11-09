@@ -65,6 +65,7 @@ static bool make_token(char *e) {
   regmatch_t pmatch;
 
   nr_token = 0;
+  Token myToken[NR_REGEX];
 
   while (e[position] != '\0') {
     /* Try all rules one by one. */
@@ -82,10 +83,15 @@ static bool make_token(char *e) {
          * to record the token in the array `tokens'. For certain types
          * of tokens, some extra actions should be performed.
          */
-		Token myToken;
+		int len = sizeof(*rules[i].regex);
         switch (rules[i].token_type) {
-		  case '+':myToken.type = rules[i].token_type;memcpy(myToken.str,rules[i].regex,sizeof(*rules[i].regex));break; 
+		  case '+':myToken[i].type = rules[i].token_type;memcpy(myToken[i].str,rules[i].regex,len);break; 
+		  case TK_DIGIT: myToken[i].type = rules[i].token_type;memcpy(myToken[i].str,rules[i].regex,len);break; 
+		  
+
+
           default: TODO();
+				   
 
         }
 
