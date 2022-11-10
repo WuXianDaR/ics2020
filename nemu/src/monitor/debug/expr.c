@@ -93,6 +93,10 @@ static bool make_token(char *e) {
         switch (rules[i].token_type) {
 		  case '+':myToken[i].type = rules[i].token_type;memcpy(myToken[i].str,rules[i].regex,len);break; 
 		  case TK_DIGIT: myToken[i].type = rules[i].token_type;memcpy(myToken[i].str,rules[i].regex,len);break; 
+
+		  case '(': myToken[i].type = rules[i].token_type;memcpy(myToken[i].str,rules[i].regex,len);break; 
+
+		  case '-': myToken[i].type = rules[i].token_type;memcpy(myToken[i].str,rules[i].regex,len);break; 
 		  
 
 
