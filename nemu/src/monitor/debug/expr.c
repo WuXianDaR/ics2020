@@ -68,10 +68,13 @@ static bool make_token(char *e) {
   nr_token = 0;
   Token myToken[NR_REGEX];
   printf("NR_REGEX length is : %ld\n",NR_REGEX);
+/*	for(int k = 0;k < NR_REGEX;k++)
+	{
+		printf("e[k] is :%c\n",e[k]);
+	}*/
 	for(int k = 0;k < NR_REGEX;k++)
 	{
-		
-	printf("e[k] is :%c\n",e[k]);
+		printf("rules[%d] = %s\n",k,rules[k].regex);
 	}
   while (e[position] != '\0') {
     /* Try all rules one by one. */
