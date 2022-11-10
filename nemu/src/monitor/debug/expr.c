@@ -94,9 +94,16 @@ static bool make_token(char *e) {
 
 		  case '-': myToken[i].type = rules[i].token_type;memcpy(myToken[i].str,rules[i].regex,len);break; 
 		  
+		  case '*':myToken[i].type = rules[i].token_type;memcpy(myToken[i].str,rules[i].regex,len);break; 
+
+		  case ')':myToken[i].type = rules[i].token_type;memcpy(myToken[i].str,rules[i].regex,len);break; 
+
+		  case '/':myToken[i].type = rules[i].token_type;memcpy(myToken[i].str,rules[i].regex,len);break; 
 
 
-      //    default: TODO();
+
+
+      //   default: TODO();
 				   
 
         }
