@@ -25,7 +25,7 @@ static struct rule {
   {"\\+", '+'},         // plus
   {"==", TK_EQ},        // equal
   {"\\(",'('},
-  {"\[0-9]",TK_DIGIT},     //digits
+  {"/[0-9]/",TK_DIGIT},     //digits
   {"\\-",'-'},
   {"\\*",'*'},
   {"/",'/'},
