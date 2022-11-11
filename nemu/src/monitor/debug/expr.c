@@ -63,6 +63,7 @@ static int nr_token __attribute__((used))  = 0;
 
 static bool make_token(char *e) {
   int position = 0;
+  int pre_position = 0;
   int i;
   int sizeof_e = sizeof(e);
   regmatch_t pmatch;
@@ -79,33 +80,33 @@ static bool make_token(char *e) {
 
         Log("match rules[%d] = \"%s\" at position %d with len %d: %.*s",
             i, rules[i].regex, position, substr_len, substr_len, substr_start);
-
+		pre_position = position;
         position += substr_len;
 
         /* TODO: Now a new token is recognized with rules[i]. Add codes
          * to record the token in the array `tokens'. For certain types
          * of tokens, some extra actions should be performed.
          */
-		int len = sizeof(e[position]);
+		int len = sizeof(e[pre_position]);
 /*		char * str_tmp = myToken[i].str;//ok,I have to admit that this code was awful,I just want to get the used size of array,crying....
 		int size_str = sizeof(str_tmp);*/
 
         switch (rules[i].token_type) {
-		  case '+':myToken[i].type = rules[i].token_type;break; 
-		  case TK_DIGIT: myToken[i].type = rules[i].token_type;
+		  case '+':myToken[pre_position].type = rules[i].token_type;break; 
+		  case TK_DIGIT: myToken[pre_position].type = rules[i].token_type;
 						 
-						memcpy(myToken[i].str,&e[position],len);
+						memcpy(myToken[pre_position].str,&e[position],len);
 		break; 
 
-		  case '(': myToken[i].type = rules[i].token_type;break; 
+		  case '(': myToken[pre_position].type = rules[i].token_type;break; 
 
-		  case '-': myToken[i].type = rules[i].token_type;break; 
+		  case '-': myToken[pre_position].type = rules[i].token_type;break; 
 		  
-		  case '*':myToken[i].type = rules[i].token_type;break; 
+		  case '*':myToken[pre_position].type = rules[i].token_type;break; 
 
-		  case ')':myToken[i].type = rules[i].token_type;break; 
+		  case ')':myToken[pre_position].type = rules[i].token_type;break; 
 
-		  case '/':myToken[i].type = rules[i].token_type;break; 
+		  case '/':myToken[pre_position].type = rules[i].token_type;break; 
 
 
 
