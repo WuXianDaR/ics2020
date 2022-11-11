@@ -96,6 +96,8 @@ static bool make_token(char *e) {
 		  case TK_DIGIT: myToken[pre_position].type = rules[i].token_type;
 						 
 						memcpy(myToken[pre_position].str,&e[pre_position],len);
+
+		printf("myToken[%d].str:%s\n",pre_position,myToken[i].str);
 		break; 
 
 		  case '(': myToken[pre_position].type = rules[i].token_type;break; 
@@ -115,7 +117,6 @@ static bool make_token(char *e) {
 				   
 
         }
-		printf("myToken[%d].str:%s\n",pre_position,myToken[i].str);
         break;
       }
     }
