@@ -64,10 +64,11 @@ static int nr_token __attribute__((used))  = 0;
 static bool make_token(char *e) {
   int position = 0;
   int i;
+  int sizeof_e = sizeof(e);
   regmatch_t pmatch;
 
   nr_token = 0;
-  Token myToken[NR_REGEX];
+  Token myToken[sizeof_e+1];
 
   while (e[position] != '\0') {
     /* Try all rules one by one. */
@@ -85,20 +86,26 @@ static bool make_token(char *e) {
          * to record the token in the array `tokens'. For certain types
          * of tokens, some extra actions should be performed.
          */
-		int len = sizeof(*rules[i].regex);
+		int len = sizeof(e[position]);
+/*		char * str_tmp = myToken[i].str;//ok,I have to admit that this code was awful,I just want to get the used size of array,crying....
+		int size_str = sizeof(str_tmp);*/
+
         switch (rules[i].token_type) {
-		  case '+':myToken[i].type = rules[i].token_type;memcpy(myToken[i].str,rules[i].regex,len);break; 
-		  case TK_DIGIT: myToken[i].type = rules[i].token_type;memcpy(myToken[i].str,rules[i].regex,len);break; 
+		  case '+':myToken[i].type = rules[i].token_type;break; 
+		  case TK_DIGIT: myToken[i].type = rules[i].token_type;
+						 
+						memcpy(myToken[i].str,&e[position],len);
+		break; 
 
-		  case '(': myToken[i].type = rules[i].token_type;memcpy(myToken[i].str,rules[i].regex,len);break; 
+		  case '(': myToken[i].type = rules[i].token_type;break; 
 
-		  case '-': myToken[i].type = rules[i].token_type;memcpy(myToken[i].str,rules[i].regex,len);break; 
+		  case '-': myToken[i].type = rules[i].token_type;break; 
 		  
-		  case '*':myToken[i].type = rules[i].token_type;memcpy(myToken[i].str,rules[i].regex,len);break; 
+		  case '*':myToken[i].type = rules[i].token_type;break; 
 
-		  case ')':myToken[i].type = rules[i].token_type;memcpy(myToken[i].str,rules[i].regex,len);break; 
+		  case ')':myToken[i].type = rules[i].token_type;break; 
 
-		  case '/':myToken[i].type = rules[i].token_type;memcpy(myToken[i].str,rules[i].regex,len);break; 
+		  case '/':myToken[i].type = rules[i].token_type;break; 
 
 
 
