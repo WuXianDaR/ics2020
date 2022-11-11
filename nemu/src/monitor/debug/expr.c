@@ -115,7 +115,7 @@ static bool make_token(char *e) {
 				   
 
         }
-		printf("myToken[%d].str:%s\n",i,myToken[i].str);
+		printf("myToken[%d].str:%s\n",pre_position,myToken[i].str);
         break;
       }
     }
