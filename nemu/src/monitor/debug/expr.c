@@ -95,7 +95,7 @@ static bool make_token(char *e) {
 		  case '+':myToken[pre_position].type = rules[i].token_type;break; 
 		  case TK_DIGIT: myToken[pre_position].type = rules[i].token_type;
 						 
-						memcpy(myToken[pre_position].str,&e[position],len);
+						memcpy(myToken[pre_position].str,&e[pre_position],len);
 		break; 
 
 		  case '(': myToken[pre_position].type = rules[i].token_type;break; 
