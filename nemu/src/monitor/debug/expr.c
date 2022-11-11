@@ -90,7 +90,7 @@ static bool make_token(char *e) {
 		int len = sizeof(e[pre_position]);
 /*		char * str_tmp = myToken[i].str;//ok,I have to admit that this code was awful,I just want to get the used size of array,crying....
 		int size_str = sizeof(str_tmp);*/
-
+		printf("len:%d,e[pre_position] = %c\n",len,e[pre_position]);
         switch (rules[i].token_type) {
 		  case '+':myToken[pre_position].type = rules[i].token_type;break; 
 		  case TK_DIGIT: myToken[pre_position].type = rules[i].token_type;
