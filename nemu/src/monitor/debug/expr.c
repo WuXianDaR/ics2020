@@ -68,8 +68,8 @@ static bool make_token(char *e) {
   int sizeof_e = sizeof(e);
   regmatch_t pmatch;
 
+  Token myToken[sizeof_e+1];//I add this to record tokens
   nr_token = 0;
-  Token myToken[sizeof_e+1];
 
   while (e[position] != '\0') {
     /* Try all rules one by one. */
@@ -88,16 +88,14 @@ static bool make_token(char *e) {
          * of tokens, some extra actions should be performed.
          */
 		int len = sizeof(e[pre_position]);
-/*		char * str_tmp = myToken[i].str;//ok,I have to admit that this code was awful,I just want to get the used size of array,crying....
-		int size_str = sizeof(str_tmp);*/
 		printf("len:%d,e[pre_position] = %c\n",len,e[pre_position]);
         switch (rules[i].token_type) {
 		  case '+':myToken[pre_position].type = rules[i].token_type;break; 
-		  case TK_DIGIT: myToken[pre_position].type = rules[i].token_type;
+		  case TK_DIGIT: tokens[pre_position].type = rules[i].token_type;
 						 
 						memcpy(myToken[pre_position].str,&e[pre_position],len);
 
-		printf("myToken[%d].str:%s\n",pre_position,myToken[pre_position].str);
+		printf("tokens[%d].str:%s\n",pre_position,myToken[pre_position].str);
 		break; 
 
 		  case '(': myToken[pre_position].type = rules[i].token_type;break; 
@@ -110,12 +108,7 @@ static bool make_token(char *e) {
 
 		  case '/':myToken[pre_position].type = rules[i].token_type;break; 
 
-
-
-
       //   default: TODO();
-				   
-
         }
         break;
       }
@@ -136,7 +129,6 @@ word_t expr(char *e, bool *success) {
     *success = false;
     return 0;
   }
-
   /* TODO: Insert codes to evaluate the expression. */
 //  TODO();
 
