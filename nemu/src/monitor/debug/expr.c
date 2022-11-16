@@ -35,7 +35,10 @@ static struct rule {
 #define NR_REGEX (sizeof(rules) / sizeof(rules[0]) )
 
 static regex_t re[NR_REGEX] = {};
+void parentheses()
+{
 
+}
 /* Rules are used for many times.
  * Therefore we compile them only once before any usage.
  */
@@ -93,23 +96,27 @@ static bool make_token(char *e) {
 		  case '+':myToken[pre_position].type = rules[i].token_type;break; 
 		  case TK_DIGIT: tokens[pre_position].type = rules[i].token_type;
 						 
+						 nr_token++;
+						 assert(nr_token < 32);
 						memcpy(myToken[pre_position].str,&e[pre_position],len);
 
 		printf("tokens[%d].str:%s\n",pre_position,myToken[pre_position].str);
 		break; 
 
-		  case '(': myToken[pre_position].type = rules[i].token_type;break; 
+		  case '(': tokens[pre_position].type = rules[i].token_type;break; 
 
-		  case '-': myToken[pre_position].type = rules[i].token_type;break; 
+		  case '-': tokens[pre_position].type = rules[i].token_type;break; 
 		  
-		  case '*':myToken[pre_position].type = rules[i].token_type;break; 
+		  case '*':tokens[pre_position].type = rules[i].token_type;break; 
 
-		  case ')':myToken[pre_position].type = rules[i].token_type;break; 
+		  case ')':tokens[pre_position].type = rules[i].token_type;break; 
 
-		  case '/':myToken[pre_position].type = rules[i].token_type;break; 
+		  case '/':tokens[pre_position].type = rules[i].token_type;break; 
 
       //   default: TODO();
+	  	
         }
+		
         break;
       }
     }
@@ -131,6 +138,7 @@ word_t expr(char *e, bool *success) {
   }
   /* TODO: Insert codes to evaluate the expression. */
 //  TODO();
+	
 
   return 0;
 }
