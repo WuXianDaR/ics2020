@@ -110,7 +110,7 @@ word_t eval(int p,int q)
 	if(p > q)return -1;
 	else if(p == q)
 	{
-		return (word_t)tokens[p].str[0];
+		return (word_t)(tokens[p].str[0]-'0');
 	}
 	else if(check_parentheses(p,q) == true)
 	{
