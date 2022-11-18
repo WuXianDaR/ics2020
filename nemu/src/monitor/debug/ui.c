@@ -73,9 +73,10 @@ static int cmd_p(char * args)
 	bool *success = &suc;
 	
 	char * cmd_char_p = strtok(args," ");
+	word_t cmd_p_val = expr(cmd_char_p,success);
 
-	word_t flag = expr(cmd_char_p,success);
-	return flag; 
+	printf("The expression's value is %d\n",cmd_p_val);
+	return 0; 
 }
 
 static struct {
