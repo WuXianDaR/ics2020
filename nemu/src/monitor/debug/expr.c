@@ -160,10 +160,8 @@ static bool make_token(char *e) {
   int position = 0;
   int pre_position = 0;
   int i;
-  int sizeof_e = sizeof(e);
   regmatch_t pmatch;
 
-  Token myToken[sizeof_e+1];//I add this to record tokens
 
   while (e[position] != '\0') {
     /* Try all rules one by one. */
@@ -184,10 +182,10 @@ static bool make_token(char *e) {
 		int len = sizeof(e[pre_position]);
 		printf("len:%d,e[pre_position] = %c\n",len,e[pre_position]);
         switch (rules[i].token_type) {
-		  case '+':myToken[pre_position].type = rules[i].token_type;nr_token++;break; 
+		  case '+':tokens[pre_position].type = rules[i].token_type;nr_token++;break; 
 		  case TK_DIGIT: tokens[pre_position].type = rules[i].token_type;
 						nr_token++; 
-						memcpy(myToken[pre_position].str,&e[pre_position],len);
+						memcpy(tokens[pre_position].str,&e[pre_position],len);
 
 //		printf("tokens[%d].str:%s\n",pre_position,myToken[pre_position].str);
 		break; 
