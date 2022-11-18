@@ -126,7 +126,7 @@ word_t eval(int p,int q)
 
 			while(i < q-p&&tokens[i].type == '(')
 			{
-				i++;
+				++i;
 				if(tokens[i].type == ')')break;	
 			}
 			if(tokens[i].type == '+'||tokens[i].type == '-')
