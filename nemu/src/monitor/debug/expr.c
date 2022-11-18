@@ -124,11 +124,9 @@ word_t eval(int p,int q)
 		for(int i = p;i <= q-p;i++)//find op place
 		{
 
-			while(i < q-p&&tokens[i].type == '(')
+			if(i < q-p&&tokens[i].type == '(')
 			{
-				++i;
-				printf("in eval' while,i is %d\n",i);
-				if(tokens[i].type == ')')break;	
+				while(i < q-p&&tokens[i].type != ')')i++;	
 			}
 			if(tokens[i].type == '+'||tokens[i].type == '-')
 			{
