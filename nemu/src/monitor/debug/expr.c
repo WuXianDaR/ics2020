@@ -189,7 +189,7 @@ static bool make_token(char *e) {
 						nr_token++; 
 						memcpy(myToken[pre_position].str,&e[pre_position],len);
 
-		printf("tokens[%d].str:%s\n",pre_position,myToken[pre_position].str);
+//		printf("tokens[%d].str:%s\n",pre_position,myToken[pre_position].str);
 		break; 
 
 		  case '(': tokens[pre_position].type = rules[i].token_type;nr_token++;break; 
@@ -227,6 +227,7 @@ word_t expr(char *e, bool *success) {
   }
   /* TODO: Insert codes to evaluate the expression. */
 //  TODO();
+	printf("in expr(),e is %s\n",e);
 	int p = 0,q = sizeof(e)-1;
 	return	eval(p,q);
   return 0;
