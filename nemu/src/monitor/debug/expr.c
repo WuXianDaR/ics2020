@@ -121,12 +121,12 @@ word_t eval(int p,int q)
 			return -1;
 		int op = 0;
 		int priority = -1;
-		for(int i = p;i <= q-p;i++)//find op place
+		for(int i = p;i <= q;i++)//find op place
 		{
 
-			if(i < q-p&&tokens[i].type == '(')
+			if(i < q&&tokens[i].type == '(')
 			{
-				while(i < q-p&&tokens[i].type != ')')i++;	
+				while(i < q&&tokens[i].type != ')')i++;	
 			}
 			if(tokens[i].type == '+'||tokens[i].type == '-')
 			{
