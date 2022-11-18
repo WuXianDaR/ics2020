@@ -227,8 +227,9 @@ word_t expr(char *e, bool *success) {
   }
   /* TODO: Insert codes to evaluate the expression. */
 //  TODO();
-	printf("in expr(),e is %s\n",e);
+//	printf("in expr(),e is %s\n",e);
 	int p = 0,q = sizeof(e)-1;
+	printf("in expr(),q equals %d\n",q);
 	return	eval(p,q);
   return 0;
 }
