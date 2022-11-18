@@ -35,10 +35,6 @@ static struct rule {
 #define NR_REGEX (sizeof(rules) / sizeof(rules[0]) )
 
 static regex_t re[NR_REGEX] = {};
-void parentheses()
-{
-
-}
 /* Rules are used for many times.
  * Therefore we compile them only once before any usage.
  */
@@ -64,6 +60,102 @@ typedef struct token {
 static Token tokens[32] __attribute__((used)) = {};
 static int nr_token __attribute__((used))  = 0;
 
+enum error_state{illegal = -2,legal};//two different error states
+int error_state_flag = 0;
+bool check_balanced_brackets(int p,int q)
+{
+	int lo = 0;	
+	for(int i = p;i <= q;i++)
+	
+	{
+		switch(tokens[i].type)
+		{
+			case '(':lo++;break;
+			case ')':lo--;break;
+			default:break;
+		}
+		if(lo < 0)
+		{
+			return false;
+		}
+	}	
+	return true;
+}
+bool check_parentheses(int p,int q)
+{
+	if(check_balanced_brackets(p,q) == true)//brackets are balanced but not sure the whole is "()" 
+	{
+		if(p == 0&&tokens[p+1].type == '('&&tokens[q-1].type == ')')
+		{
+			error_state_flag = legal;//sub-expression can be calculated
+			return false;
+		}	
+		else if(tokens[p].type == '('&&tokens[q].type == ')')
+		{
+			return true;
+		}
+		else{
+			error_state_flag = legal;
+			return false;
+		}
+	}
+	else{
+		error_state_flag = illegal;//bad expression
+		return false;
+	}	
+	return false;
+}
+word_t eval(int p,int q)
+{
+	if(p > q)return -1;
+
+	else if(check_parentheses(p,q) == true)
+	{
+		return eval(p+1,q-1);
+	}
+	else{
+		if(error_state_flag == illegal)
+			return -1;
+		int op = 0;
+		int priority = -1;
+		for(int i = p;i <= q-p;i++)//find op place
+		{
+
+			while(i < q-p&&tokens[i].type == '(')
+			{
+				i++;
+				if(tokens[i].type == ')')break;	
+			}
+			if(tokens[i].type == '+'||tokens[i].type == '-')
+			{
+				op = i;
+				priority = 1;
+			}
+			else if((tokens[i].type == '*'||tokens[i].type == '/')&&priority <= 0)
+			{
+				op = i;
+				priority = 0;
+			}
+			else if(tokens[i].type == ')')
+			{
+				op = -1;
+				priority = -1;
+			}
+		}
+		int val1 = eval(p,op-1);
+		int val2 = eval(op+1,q);
+
+		switch(tokens[op].type)
+		{
+			case '+':return val1+val2;
+			case '-':return val1-val2;
+
+			case '*':return val1*val2;
+			case '/':return val1/val2;
+			default:assert(0);	 
+		}
+	}
+}
 static bool make_token(char *e) {
   int position = 0;
   int pre_position = 0;
@@ -72,7 +164,6 @@ static bool make_token(char *e) {
   regmatch_t pmatch;
 
   Token myToken[sizeof_e+1];//I add this to record tokens
-  nr_token = 0;
 
   while (e[position] != '\0') {
     /* Try all rules one by one. */
@@ -93,25 +184,23 @@ static bool make_token(char *e) {
 		int len = sizeof(e[pre_position]);
 		printf("len:%d,e[pre_position] = %c\n",len,e[pre_position]);
         switch (rules[i].token_type) {
-		  case '+':myToken[pre_position].type = rules[i].token_type;break; 
+		  case '+':myToken[pre_position].type = rules[i].token_type;nr_token++;break; 
 		  case TK_DIGIT: tokens[pre_position].type = rules[i].token_type;
-						 
-						 nr_token++;
-						 assert(nr_token < 32);
+						nr_token++; 
 						memcpy(myToken[pre_position].str,&e[pre_position],len);
 
 		printf("tokens[%d].str:%s\n",pre_position,myToken[pre_position].str);
 		break; 
 
-		  case '(': tokens[pre_position].type = rules[i].token_type;break; 
+		  case '(': tokens[pre_position].type = rules[i].token_type;nr_token++;break; 
 
-		  case '-': tokens[pre_position].type = rules[i].token_type;break; 
+		  case '-': tokens[pre_position].type = rules[i].token_type;nr_token++;break; 
 		  
-		  case '*':tokens[pre_position].type = rules[i].token_type;break; 
+		  case '*':tokens[pre_position].type = rules[i].token_type;nr_token++;break; 
 
-		  case ')':tokens[pre_position].type = rules[i].token_type;break; 
+		  case ')':tokens[pre_position].type = rules[i].token_type;nr_token++;break; 
 
-		  case '/':tokens[pre_position].type = rules[i].token_type;break; 
+		  case '/':tokens[pre_position].type = rules[i].token_type;nr_token++;break; 
 
       //   default: TODO();
 	  	
@@ -138,7 +227,7 @@ word_t expr(char *e, bool *success) {
   }
   /* TODO: Insert codes to evaluate the expression. */
 //  TODO();
-	
-
+	int p = 0,q = sizeof(e)-1;
+	return	eval(p,q);
   return 0;
 }

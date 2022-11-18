@@ -72,7 +72,7 @@ static int cmd_p(char * args)
 	bool suc = true;
 	bool *success = &suc;
 	word_t flag = expr(args,success);
-	return flag == 0? 0: -1;
+	return flag; 
 }
 
 static struct {
