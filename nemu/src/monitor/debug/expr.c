@@ -127,6 +127,7 @@ word_t eval(int p,int q)
 			while(i < q-p&&tokens[i].type == '(')
 			{
 				++i;
+				printf("in eval' while,i is %d\n",i);
 				if(tokens[i].type == ')')break;	
 			}
 			if(tokens[i].type == '+'||tokens[i].type == '-')
@@ -183,7 +184,7 @@ static bool make_token(char *e) {
          * of tokens, some extra actions should be performed.
          */
 		int len = sizeof(e[pre_position]);
-		printf("len:%d,e[pre_position] = %c\n",len,e[pre_position]);
+		//printf("len:%d,e[pre_position] = %c\n",len,e[pre_position]);
         switch (rules[i].token_type) {
 		  case '+':tokens[pre_position].type = rules[i].token_type;nr_token++;break; 
 		  case TK_DIGIT: tokens[pre_position].type = rules[i].token_type;
@@ -206,10 +207,10 @@ static bool make_token(char *e) {
       //   default: TODO();
 	  	
         }
-		for(int i = 0;i < 5;i++)
+		/*for(int i = 0;i < 5;i++)
 		{
 			printf("tokens[%d] is %d\n",i,tokens[i].type);
-		}
+		}*/
         break;
       }
     }
