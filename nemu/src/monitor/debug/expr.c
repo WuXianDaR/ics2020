@@ -203,7 +203,10 @@ static bool make_token(char *e) {
       //   default: TODO();
 	  	
         }
-		
+		for(int i = 0;i < 5;i++)
+		{
+			printf("tokens[%d] is %d\n",i,tokens[i].type);
+		}
         break;
       }
     }
