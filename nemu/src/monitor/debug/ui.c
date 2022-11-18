@@ -73,7 +73,8 @@ static int cmd_p(char * args)
 	bool *success = &suc;
 	
 	char * cmd_char_p = strtok(args," ");
-	
+	printf("cmd_char_p is %s\n",cmd_char_p);
+
 	word_t flag = expr(cmd_char_p,success);
 	return flag; 
 }
