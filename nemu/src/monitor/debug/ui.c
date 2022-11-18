@@ -71,7 +71,10 @@ static int cmd_p(char * args)
 {
 	bool suc = true;
 	bool *success = &suc;
-	word_t flag = expr(args,success);
+	
+	char * cmd_char_p = strtok(args," ");
+	
+	word_t flag = expr(cmd_char_p,success);
 	return flag; 
 }
 
