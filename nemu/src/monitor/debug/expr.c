@@ -89,18 +89,28 @@ bool check_parentheses(int p,int q)
 		printf("in check_parentheses before run,p is %d,q is %d\n",p,q);
 	if(check_balanced_brackets(p,q) == true)//brackets are balanced but not sure the whole is "()" 
 	{
-		if(p == 0&&tokens[p+1].type == '('&&tokens[q-1].type == ')')
+		if(p == 0)
 		{
+			if(check_balanced_brackets(p+1,q-1) == true)
+			{
+				
 			error_state_flag = legal;//sub-expression can be calculated
-			printf("in check_parentheses() if1 p is %d,q is %d\n",p,q);
+			printf("in check_parentheses() if1_1 p is %d,q is %d\n",p,q);
 			return true;
+			}
+			else{
+				error_state_flag = legal;
+
+				printf("in check_parentheses() if1_2 p is %d,q is %d\n",p,q);
+				return false;
+			}
 		}	
 		else if(tokens[p].type == '('&&tokens[q].type == ')')
 		{
 			error_state_flag = normal;
 
 			printf("in check_parentheses() if2 p is %d,q is %d\n",p,q);
-				return false;
+				return true;
 		}
 		else{
 			error_state_flag = legal;
