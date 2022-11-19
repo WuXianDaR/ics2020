@@ -60,7 +60,7 @@ typedef struct token {
 static Token tokens[32] __attribute__((used)) = {};
 static int nr_token __attribute__((used))  = 0;
 
-enum error_state{illegal = -2,legal};//two different error states
+enum error_state{illegal = -2,legal,normal};//two different error states
 int error_state_flag = 0;
 bool check_balanced_brackets(int p,int q)
 {
@@ -74,7 +74,7 @@ bool check_balanced_brackets(int p,int q)
 			case ')':lo--;break;
 			default:break;
 		}
-		if(lo < 0)
+		if(lo !=  0)
 		{
 			return false;
 		}
@@ -92,7 +92,8 @@ bool check_parentheses(int p,int q)
 		}	
 		else if(tokens[p].type == '('&&tokens[q].type == ')')
 		{
-			return true;
+			error_state_flag = normal;
+				return true;
 		}
 		else{
 			error_state_flag = legal;
@@ -107,7 +108,7 @@ bool check_parentheses(int p,int q)
 }
 word_t eval(int p,int q)
 {
-	if(p > q)return -1;
+	if(p > q)return 0;
 	else if(p == q)
 	{
 		return (word_t)(tokens[p].str[0]-'0');
@@ -124,9 +125,9 @@ word_t eval(int p,int q)
 		for(int i = p;i <= q;i++)//find op place
 		{
 
-			if(i < q&&tokens[i].type == '(')
+			if(i <=q&&tokens[i].type == '(')
 			{
-				while(i < q&&tokens[i].type != ')')i++;	
+				while(i <= q&&tokens[i].type != ')')i++;	
 			}
 			if(tokens[i].type == '+'||tokens[i].type == '-')
 			{
@@ -138,7 +139,7 @@ word_t eval(int p,int q)
 				op = i;
 				priority = 0;
 			}
-			else if(tokens[i].type == ')')
+			else if(error_state_flag == legal&&tokens[i].type == ')')
 			{
 				op = -1;
 				priority = -1;
