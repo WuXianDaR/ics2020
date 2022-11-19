@@ -142,7 +142,7 @@ word_t eval(int p,int q)
 			{
 				while(i <= q&&tokens[i].type != ')')i++;	
 			}
-			if(tokens[i].type == '+'||tokens[i].type == '-')
+			else if(tokens[i].type == '+'||tokens[i].type == '-')
 			{
 				op = i;
 				priority = 1;
