@@ -154,6 +154,7 @@ word_t eval(int p,int q)
 			}
 			else if(error_state_flag == legal&&tokens[i].type == ')')
 			{
+				printf("in eval() i == %d \n",i);
 				op = -1;
 				priority = -1;
 			}
