@@ -67,7 +67,7 @@ int error_state_flag = 0;
 bool check_balanced_brackets(int p,int q)//check the brackets is balanced
 {
 	int lo = 0;	
-	printf("in check_balanced_brackets before run p is %d,q is %d\n",p,q);
+	//printf("in check_balanced_brackets before run p is %d,q is %d\n",p,q);
 	for(int i = p;i <= q;i++)
 	{
 		if(tokens[i].type == ')'&&lo == 0)
@@ -270,7 +270,7 @@ word_t expr(char *e, bool *success) {
 //  TODO();
 //	printf("in expr(),e is %s\n",e);
 	int p = 0,q = strlen(e)-1;
-	printf("in expr(),q equals %d\n",q);
+//	printf("in expr(),q equals %d\n",q);
 	return	eval(p,q);
   return 0;
 }
