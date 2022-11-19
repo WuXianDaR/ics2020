@@ -65,6 +65,7 @@ int error_state_flag = 0;
 bool check_balanced_brackets(int p,int q)
 {
 	int lo = 0;	
+	printf("in check_balanced_brackets before run p is %d,q is %d\n",p,q);
 	for(int i = p;i <= q;i++)
 	
 	{
@@ -77,12 +78,15 @@ bool check_balanced_brackets(int p,int q)
 	}	
 		if(lo !=  0)
 		{
-			return false;
+			printf("in check_balanced_brackets after run before return false p is %d,q is %d\n",p,q);
+				return false;
 		}
+		printf("in check_balanced_brackets after run before return true p is %d,q is %d\n",p,q);
 	return true;
 }
 bool check_parentheses(int p,int q)
 {
+		printf("in check_parentheses before run,p is %d,q is %d\n",p,q);
 	if(check_balanced_brackets(p,q) == true)//brackets are balanced but not sure the whole is "()" 
 	{
 		if(p == 0&&tokens[p+1].type == '('&&tokens[q-1].type == ')')
@@ -152,7 +156,7 @@ word_t eval(int p,int q)
 		int val1 = eval(p,op-1);
 		
 		int val2 = eval(op+1,q);
-		printf("p = %d,q = %d,op = %d,val1 = %d,val2 = %d\n",p,q,op,val1,val2);
+		printf("in eval():p = %d,q = %d,op = %d,val1 = %d,val2 = %d\n",p,q,op,val1,val2);
 		switch(tokens[op].type)
 		{
 			case '+':return val1+val2;
