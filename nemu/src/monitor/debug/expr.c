@@ -119,7 +119,10 @@ word_t eval(int p,int q)
 	}
 	else{
 		if(error_state_flag == illegal)
+		{
+			printf("p = %d,q = %d\n",p,q);
 			return -1;
+		}
 		int op = 0;
 		int priority = -1;
 		for(int i = p;i <= q;i++)//find op place
