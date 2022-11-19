@@ -101,6 +101,7 @@ bool check_parentheses(int p,int q)
 		}
 	}
 	else{
+		printf("brackets not balanced when p is %d,q is %d\n",p,q);
 		error_state_flag = illegal;//bad expression
 		return false;
 	}	
