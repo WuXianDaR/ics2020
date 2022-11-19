@@ -67,13 +67,17 @@ bool check_balanced_brackets(int p,int q)
 	int lo = 0;	
 	printf("in check_balanced_brackets before run p is %d,q is %d\n",p,q);
 	for(int i = p;i <= q;i++)
-	
 	{
-		switch(tokens[i].type)
+		if(tokens[i].type == ')'&&lo == 0)
 		{
-			case '(':lo++;break;
-			case ')':lo--;break;
-			default:break;
+			continue;
+		}
+		else if(tokens[i].type == '(')
+		{
+			lo++;
+		}
+		else{
+			lo--;
 		}
 	}	
 		if(lo !=  0)
