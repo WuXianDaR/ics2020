@@ -72,13 +72,14 @@ bool check_balanced_brackets(int p,int q)
 		{
 			continue;
 		}
-		else if(tokens[i].type == '(')
+		if(tokens[i].type == '(')
 		{
 			lo++;
 		}
-		else{
+		if(tokens[i].type == ')'&&lo != 0)
+		{
 			lo--;
-		}
+		}	
 	}	
 		if(lo !=  0)
 		{
