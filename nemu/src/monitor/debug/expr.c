@@ -100,27 +100,28 @@ bool check_parentheses(int p,int q)
 		{
 			if(check_balanced_brackets(p+1,q-1) == true)
 			{
-				bracket_state_flag = normal;
+				if(tokens[p+1].type == '('&&tokens[q-1].type == ')')
+					bracket_state_flag = normal;
 				error_state_flag = legal;//sub-expression can be calculated
 				printf("in check_parentheses() if1_1 p is %d,q is %d\n",p,q);
 				return true;
 			}
 			else{
 				error_state_flag = legal;
-				bracket_state_flag = unnormal;
 				printf("in check_parentheses() if1_2 p is %d,q is %d\n",p,q);
 				return false;
 			}
 		}	
 		else if(tokens[p].type == '('&&tokens[q].type == ')')
 		{
-			error_state_flag = legal;
 			if(bracket_state_flag == normal)
 			{
+				bracket_state_flag = unnormal;
 				return false;
-			}
+			}		
+			error_state_flag = legal;
 			printf("in check_parentheses() if2 p is %d,q is %d\n",p,q);
-				return true;
+			return true;
 		}
 		else{
 			error_state_flag = legal;
