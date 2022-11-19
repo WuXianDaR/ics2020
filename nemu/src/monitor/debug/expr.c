@@ -61,10 +61,10 @@ static Token tokens[32] __attribute__((used)) = {};
 static int nr_token __attribute__((used))  = 0;
 
 enum error_state{illegal = -2,legal};//two different error states
-enum bracket_state{normal = -4,unnormal};
-int bracket_state_flag = 0;
+enum bracket_state{normal = -4,unnormal};//Ok,I try my best ,it's my only method to resolve expression like "((?+?)*(?+?))"
+int bracket_state_flag = 0;//this flag is just to detect "(())"
 int error_state_flag = 0;
-bool check_balanced_brackets(int p,int q)
+bool check_balanced_brackets(int p,int q)//check the brackets is balanced
 {
 	int lo = 0;	
 	printf("in check_balanced_brackets before run p is %d,q is %d\n",p,q);
@@ -85,30 +85,31 @@ bool check_balanced_brackets(int p,int q)
 	}	
 		if(lo !=  0)
 		{
-			printf("in check_balanced_brackets after run before return false p is %d,q is %d\n",p,q);
+//			printf("in check_balanced_brackets after run before return false p is %d,q is %d\n",p,q);
 				return false;
 		}
-		printf("in check_balanced_brackets after run before return true p is %d,q is %d\n",p,q);
+	//	printf("in check_balanced_brackets after run before return true p is %d,q is %d\n",p,q);
+
 	return true;
 }
 bool check_parentheses(int p,int q)
 {
-		printf("in check_parentheses before run,p is %d,q is %d\n",p,q);
+	//	printf("in check_parentheses before run,p is %d,q is %d\n",p,q);
 	if(check_balanced_brackets(p,q) == true)//brackets are balanced but not sure the whole is "()" 
 	{
 		if(p == 0)
 		{
-			if(check_balanced_brackets(p+1,q-1) == true)
+			if(check_balanced_brackets(p+1,q-1) == true)//to check expressions like "()*()"
 			{
 				if(tokens[p+1].type == '('&&tokens[q-1].type == ')')
 					bracket_state_flag = normal;
 				error_state_flag = legal;//sub-expression can be calculated
-				printf("in check_parentheses() if1_1 p is %d,q is %d\n",p,q);
+	//			printf("in check_parentheses() if1_1 p is %d,q is %d\n",p,q);
 				return true;
 			}
 			else{
 				error_state_flag = legal;
-				printf("in check_parentheses() if1_2 p is %d,q is %d\n",p,q);
+	//			printf("in check_parentheses() if1_2 p is %d,q is %d\n",p,q);
 				return false;
 			}
 		}	
@@ -120,18 +121,18 @@ bool check_parentheses(int p,int q)
 				return false;
 			}		
 			error_state_flag = legal;
-			printf("in check_parentheses() if2 p is %d,q is %d\n",p,q);
+	//		printf("in check_parentheses() if2 p is %d,q is %d\n",p,q);
 			return true;
 		}
 		else{
 			error_state_flag = legal;
 
-			printf("in check_parentheses() if3 p is %d,q is %d\n",p,q);
+	//		printf("in check_parentheses() if3 p is %d,q is %d\n",p,q);
 			return false;
 		}
 	}
 	else{
-		printf("brackets not balanced when p is %d,q is %d\n",p,q);
+	//	printf("brackets not balanced when p is %d,q is %d\n",p,q);
 		error_state_flag = illegal;//bad expression
 		return false;
 	}	
@@ -183,7 +184,7 @@ word_t eval(int p,int q)
 		int val1 = eval(p,op-1);
 		
 		int val2 = eval(op+1,q);
-		printf("in eval():p = %d,q = %d,op = %d,val1 = %d,val2 = %d\n",p,q,op,val1,val2);
+	//	printf("in eval():p = %d,q = %d,op = %d,val1 = %d,val2 = %d\n",p,q,op,val1,val2);
 		switch(tokens[op].type)
 		{
 			case '+':return val1+val2;
