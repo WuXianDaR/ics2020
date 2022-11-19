@@ -74,11 +74,11 @@ bool check_balanced_brackets(int p,int q)
 			case ')':lo--;break;
 			default:break;
 		}
+	}	
 		if(lo !=  0)
 		{
 			return false;
 		}
-	}	
 	return true;
 }
 bool check_parentheses(int p,int q)
