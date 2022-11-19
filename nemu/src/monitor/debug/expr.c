@@ -60,7 +60,9 @@ typedef struct token {
 static Token tokens[32] __attribute__((used)) = {};
 static int nr_token __attribute__((used))  = 0;
 
-enum error_state{illegal = -2,legal,normal};//two different error states
+enum error_state{illegal = -2,legal};//two different error states
+enum bracket_state{normal = -4,unnormal};
+int bracket_state_flag = 0;
 int error_state_flag = 0;
 bool check_balanced_brackets(int p,int q)
 {
@@ -98,22 +100,25 @@ bool check_parentheses(int p,int q)
 		{
 			if(check_balanced_brackets(p+1,q-1) == true)
 			{
-				
-			error_state_flag = legal;//sub-expression can be calculated
-			printf("in check_parentheses() if1_1 p is %d,q is %d\n",p,q);
-			return true;
+				bracket_state_flag = normal;
+				error_state_flag = legal;//sub-expression can be calculated
+				printf("in check_parentheses() if1_1 p is %d,q is %d\n",p,q);
+				return true;
 			}
 			else{
 				error_state_flag = legal;
-
+				bracket_state_flag = unnormal;
 				printf("in check_parentheses() if1_2 p is %d,q is %d\n",p,q);
 				return false;
 			}
 		}	
 		else if(tokens[p].type == '('&&tokens[q].type == ')')
 		{
-			error_state_flag = normal;
-
+			error_state_flag = legal;
+			if(bracket_state_flag == normal)
+			{
+				return false;
+			}
 			printf("in check_parentheses() if2 p is %d,q is %d\n",p,q);
 				return true;
 		}
