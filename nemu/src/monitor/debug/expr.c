@@ -93,14 +93,14 @@ bool check_parentheses(int p,int q)
 		{
 			error_state_flag = legal;//sub-expression can be calculated
 			printf("in check_parentheses() if1 p is %d,q is %d\n",p,q);
-			return false;
+			return true;
 		}	
 		else if(tokens[p].type == '('&&tokens[q].type == ')')
 		{
 			error_state_flag = normal;
 
 			printf("in check_parentheses() if2 p is %d,q is %d\n",p,q);
-				return true;
+				return false;
 		}
 		else{
 			error_state_flag = legal;
